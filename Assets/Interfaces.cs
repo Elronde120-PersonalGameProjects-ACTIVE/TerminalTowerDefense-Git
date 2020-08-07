@@ -1,0 +1,59 @@
+﻿using UnityEngine;
+using System.Collections;
+/*
+public interface Command
+{
+    /// <summary>
+    /// The string that represents how this command is supposed to be used
+    /// </summary>
+    /// <returns>The string that shows how this command is supposed to be used</returns>
+    string GetUsage();
+
+    /// <summary>
+    /// The string that will cause this command to activate [I.E. "cd" or "man"]
+    /// </summary>
+    /// <returns>The string that will activate this command</returns>
+    string GetCommandName();
+
+    /// <summary>
+    /// Executes the command
+    /// </summary>
+    /// <param name="args">arguments to pass into the command</param>
+    void Excecute(params string[] args);
+
+    /// <summary>
+    /// Geta (or creates) a man page class for this command
+    /// </summary>
+    /// <returns>A man page for this command</returns>
+    ManPage Man();
+}
+*/
+public abstract class Command : MonoBehaviour
+{
+    protected ManPage internalManPage;
+     public const string NOT_INITIALIZED = "NOT_INITIALIZED";
+    /// <summary>
+    /// The string that represents how this command is supposed to be used
+    /// </summary>
+    /// <returns>The string that shows how this command is supposed to be used</returns>
+    public abstract string GetUsage();
+
+    /// <summary>
+    /// The string that will cause this command to activate [I.E. "cd" or "man"]
+    /// </summary>
+    /// <returns>The string that will activate this command</returns>
+    public abstract string GetCommandName();
+
+    /// <summary>
+    /// Executes the command
+    /// </summary>
+    /// <param name="args">arguments to pass into the command</param>
+    public abstract void Excecute(params string[] args);
+
+    /// <summary>
+    /// Geta (or creates) a man page class for this command
+    /// </summary>
+    /// <returns>A man page for this command</returns>
+    public abstract ManPage Man();
+}
+
