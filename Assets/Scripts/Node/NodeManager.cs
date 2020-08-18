@@ -5,17 +5,11 @@ using UnityEngine;
 /// <summary>
 /// Spawns and provides access to all nodes in the level
 /// </summary>
-public class NodeManager : MonoBehaviour
+public class NodeManager : GameplayComponent
 {
     public int numRows = 0, numColumns = 0;
     public float rowOffset, columnOffset;
-
-    /// <summary>
-    /// Has this script finished its startup?
-    /// </summary>
-    /// <value></value>
-    public bool isReady {get; private set;}
-
+    private bool isReady = false;
     public static NodeManager instance;
     private Node[,] nodes;
     public Node nodePrefab;
@@ -116,5 +110,13 @@ public class NodeManager : MonoBehaviour
         }
 
         return new KeyValuePair<bool, bool>(isValidRow, isValidColumn);
+    }
+
+    /// <summary>
+    /// Has this script finished its startup?
+    /// </summary>
+    /// <value></value>
+    public override bool IsReady(){
+        return isReady;
     }
 }

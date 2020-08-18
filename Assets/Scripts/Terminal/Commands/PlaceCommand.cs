@@ -30,7 +30,7 @@ public class PlaceCommand : Command
 
     public override void Excecute(params string[] args){
         
-        if(NodeManager.instance != null && NodeManager.instance.isReady){
+        if(NodeManager.instance != null && NodeManager.instance.IsReady()){
             //TODO:
             //Get tower from tower database
             Terminal.PrintToTerminal("Tower Database not implimented!");
