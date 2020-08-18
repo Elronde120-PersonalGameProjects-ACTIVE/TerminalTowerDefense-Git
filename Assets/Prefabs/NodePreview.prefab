@@ -71,13 +71,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2945879069050614854}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6fb58f70d6e4074bba4cfb1da5cd3f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0771d1987de733f4ca767a5432bc858d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   numRows: 0
   numColumns: 0
-  rowOffset: 0
-  columnOffset: 0
-  nodePrefab: {fileID: 749679646579513620, guid: 52d5d4c1ac1d495469179e50ac55d834,
-    type: 3}
-  nodeParent: {fileID: 923732516}
+  sphearSize: 1
+  drawLines: 1
+  spacing: {x: 0, y: 0}
+  playerBaseStart: {x: 0, y: 0}
+  enemyStart: {x: 0, y: 0}
+  enemyPath: []
