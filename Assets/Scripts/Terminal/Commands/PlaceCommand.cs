@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlaceCommand : Command
 {
-    public GameObject tempTower;
 
     //TODO:
     //Reference tower database here
@@ -30,10 +29,7 @@ public class PlaceCommand : Command
 
     public override void Excecute(params string[] args){
         
-        if(NodeManager.instance != null && NodeManager.instance.isReady){
-            //TODO:
-            //Get tower from tower database
-            Terminal.PrintToTerminal("Tower Database not implimented!");
+        if(NodeManager.instance != null && NodeManager.instance.IsReady()){
             if(args.Length >= 3){
                 int posX;
                 int posY;
@@ -59,14 +55,21 @@ public class PlaceCommand : Command
                         Terminal.PrintToTerminal(posX + " " + posY + " already has a tower!");
                         return;
                     }
-                    Instantiate(tempTower, placementNode.gameObject.transform.position, Quaternion.identity, placementNode.transform);
+                    if(TowerDatabase.instance.Check(args[0]) == false){
+                        Terminal.PrintToTerminal(args[0] + " is not a valid name!");
+                        return;
+                    }
+
+                    //subtract resources here
+                    Instantiate(TowerDatabase.instance.Get(args[0]).towerGameobject, placementNode.gameObject.transform.position, Quaternion.identity, placementNode.transform);
+                    //apply stats to tower script on towerGameobject here
                 }
                 else{
                     Terminal.PrintToTerminal(posX + " " + posY + " is not a valid tower location!");
                     return;
                 }
 
-                Terminal.PrintToTerminal( args[0] + " tower places successfully at " + posX + " " + posY + "!");
+                Terminal.PrintToTerminal( args[0] + " tower placed successfully at " + posX + " " + posY + "!");
 
             }else{
                 Terminal.PrintToTerminal("Incorrect usage: " + GetUsage());
