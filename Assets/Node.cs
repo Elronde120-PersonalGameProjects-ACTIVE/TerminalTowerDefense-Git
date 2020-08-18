@@ -42,6 +42,10 @@ public class Node : MonoBehaviour
         }
     }
 
+    public bool HasChild(){
+        return transform.childCount != 0;
+    }
+
     SpriteRenderer GetSpriteRenderer(){
         if(spriteRenderer == null){
             spriteRenderer = GetComponent<SpriteRenderer>();

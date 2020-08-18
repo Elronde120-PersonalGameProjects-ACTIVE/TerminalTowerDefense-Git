@@ -27,6 +27,10 @@ public class TestCommand : Command
 
     public override void Excecute(params string[] args){
         Terminal.PrintToTerminal("Test Command: Printing to terminal!");
+        Terminal.PrintToTerminal("Test Command: args:");
+        for(int i = 0; i < args.Length; i++){
+            Terminal.PrintToTerminal("Test Command: args[" + i + "]: " + args[i]);
+        }
     }
 
     public override ManPage Man(){

@@ -16,7 +16,7 @@ public class NodeManager : MonoBehaviour
     /// <value></value>
     public bool isReady {get; private set;}
 
-    public NodeManager instance;
+    public static NodeManager instance;
     private Node[,] nodes;
     public Node nodePrefab;
     public GameObject nodeParent;
@@ -78,5 +78,43 @@ public class NodeManager : MonoBehaviour
             enemyStart = preview.enemyStart;
             enemyPath = preview.enemyPath;
         }
+    }
+
+    /// <summary>
+    /// Gets a node object at indexes posX posY
+    /// </summary>
+    /// <param name="posX">column index</param>
+    /// <param name="posY">row index</param>
+    /// <returns>A valid node object if posX and posY are valid indexes, null otherwise</returns>
+    public Node GetNode(int posX, int posY){
+        if(IsValidIndex(posX).Value && IsValidIndex(posY).Key){
+            return nodes[posX, posY];
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Checks if the given index is valid for indexing nodes, key is for row indexing, column is for column indexing
+    /// </summary>
+    /// <param name="index">The index to check</param>
+    /// <returns>
+    /// Returns:
+    /// <true, false> if the index is only valid for row indexing
+    /// <false, true> if the index is only valid for column indexing
+    /// <false, false> if the index is not valid at all
+    /// <true, true> if the index is only valid for both row and column indexing
+    /// </returns>
+    public KeyValuePair<bool, bool> IsValidIndex(int index){
+        bool isValidRow = false, isValidColumn = false;
+        if(index >= 0  && index < numRows){
+            isValidRow = true;
+        }
+
+        if(index >= 0  && index < numColumns){
+            isValidColumn = true;
+        }
+
+        return new KeyValuePair<bool, bool>(isValidRow, isValidColumn);
     }
 }
