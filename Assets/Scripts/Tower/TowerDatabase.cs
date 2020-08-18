@@ -9,10 +9,10 @@ public class TowerDatabase : GameplayComponent
 {
     public static TowerDatabase instance;
     private bool isReady = false;
-    private Dictionary<string, GameObject> towerDB = new Dictionary<string, GameObject>();
+    private Dictionary<string, TowerDBEntry> towerDB = new Dictionary<string, TowerDBEntry>();
 
     [SerializeField]
-    private NameTowerPair[] initialTowerDatabase;
+    private TowerDBEntry[] initialTowerDatabase;
     
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class TowerDatabase : GameplayComponent
     /// </summary>
     /// <param name="name">The name of the tower to get</param>
     /// <returns>Returns a valid gameobject of name corosponds to a entry in the DB, null otherwise</returns>
-    public GameObject Get(string name){
+    public TowerDBEntry Get(string name){
         if(IsReady()){
             if(Check(name) == false){
                 return null;
@@ -48,27 +48,17 @@ public class TowerDatabase : GameplayComponent
     }
 
     /// <summary>
-    /// Creates a new entry in the DB based on given data
-    /// </summary>
-    /// <param name="name">The name of the tower (also the key in the DB)</param>
-    /// <param name="tower">The tower gameobject (also the value in the DB</param>
-    /// <returns>Returns true if creation was successful, false otherwise</returns>
-    public bool Add(string name, GameObject tower){
-        if(Check(name)){
-            Debug.LogError("TowerDatabase: Detected a duplicate key when attempting to insert!");
-            return false;
-        }
-        towerDB.Add(name,tower);
-        return true;
-    }
-
-    /// <summary>
     /// Creates a new entry in the DB based on given wrapped data
     /// </summary>
     /// <param name="insertionData">The wrapped data to insert</param>
     /// <returns>Returns true if creation and insertion was successful, false otherwise</returns>
-    public bool Add(NameTowerPair insertionData){
-        return Add(insertionData.name, insertionData.tower);
+    public bool Add(TowerDBEntry insertionData){
+        if(Check(name)){
+            Debug.LogError("TowerDatabase: Detected a duplicate key when attempting to insert!");
+            return false;
+        }
+        towerDB.Add(insertionData.towerName, insertionData);
+        return true;
     }
 
     /// <summary>
@@ -102,9 +92,9 @@ public class TowerDatabase : GameplayComponent
     /// </summary>
     /// <param name="dataWrapper">The wrapped data</param>
     /// <returns>Returns true if the wrapped data corosponds to a entry in the DB, false othwerwise</returns>
-    public bool Check(NameTowerPair dataWrapper){
+    public bool Check(TowerDBEntry dataWrapper){
         if(Check(dataWrapper.name)){
-            return towerDB[dataWrapper.name] == dataWrapper.tower;          
+            return towerDB[dataWrapper.name] == dataWrapper.towerGameobject;          
         }
 
         return false;
@@ -117,13 +107,4 @@ public class TowerDatabase : GameplayComponent
     public override bool IsReady(){
         return isReady;
     }
-
-    /// <summary>
-    /// Class made for easy wrapping and data input for database creation
-    /// </summary>
-    [System.Serializable]
-    public class NameTowerPair{
-        public string name;
-        public GameObject tower;
-    };
 }

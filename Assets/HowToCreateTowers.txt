@@ -1,0 +1,14 @@
+Creating a tower:
+1: Create the tower gameobject
+2: Create the TowerStats scriptable object
+	1: cost entry is what the user must pay to create the tower
+	2: damage entry is how much damage the tower does to enemies per hit
+	3: range is how far can the tower see enemies
+3: Create the TowerDBEntry scriptable object
+	1: name entry is what the user will type in to reference a specific tower
+	2: desc enrty is what appears when the user inspects the tower object
+	3: tower gameobject is what will be instantiated when the user inputs the proper command
+	4: stats entry is what stats the tower will have
+
+4: Add to initialTower list on DB
+	1: Currently the towerDB is local to all scenes, apply change to DB prefab to give all instances access to new tower
