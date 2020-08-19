@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReplaceCommand : Command
+public class CommandsCommand : Command
 {
     // Start is called before the first frame update
     void Start()
@@ -26,12 +26,8 @@ public class ReplaceCommand : Command
 
     public override IEnumerator Excecute(params string[] args){
         
-        if(args.Length >= 3){
-            yield return StartCoroutine(Terminal.sCommandDatabase["remove"].Excecute(args[1], args[2]));      
-            yield return StartCoroutine(Terminal.sCommandDatabase["place"].Excecute(args[0], args[1], args[2]));
-        }else{
-            Terminal.PrintToTerminal("Incorrect usage: " + GetUsage());
-             yield return false;
+        foreach(KeyValuePair<string, Command> command in Terminal.sCommandDatabase){
+            Terminal.PrintToTerminal(command.Value.GetCommandName());
         }
 
         yield return true;
@@ -40,10 +36,10 @@ public class ReplaceCommand : Command
     public override ManPage Man(){
         if(internalManPage == null){
             internalManPage = new ManPage();
-            internalManPage.commandName = "replace";
-            internalManPage.usage = "replace [TowerName] [posX] [posY]";
-            internalManPage.description = "Calls remove and place commands with given arguments";
-            internalManPage.example = "replace Shooter 0 2";
+            internalManPage.commandName = "commands";
+            internalManPage.usage = "commands";
+            internalManPage.description = "Prints all command names, usage, and descriptions.";
+            internalManPage.example = "commands";
         }
 
         return internalManPage;

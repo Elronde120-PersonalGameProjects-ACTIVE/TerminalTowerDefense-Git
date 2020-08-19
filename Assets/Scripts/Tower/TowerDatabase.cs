@@ -10,6 +10,7 @@ public class TowerDatabase : GameplayComponent
     public static TowerDatabase instance;
     private bool isReady = false;
     private Dictionary<string, TowerDBEntry> towerDB = new Dictionary<string, TowerDBEntry>();
+    private List<string> towerNames = new List<string>();
 
     [SerializeField]
     private TowerDBEntry[] initialTowerDatabase;
@@ -25,6 +26,7 @@ public class TowerDatabase : GameplayComponent
                 continue;
             }
             Add(initialTowerDatabase[i]);
+            towerNames.Add(initialTowerDatabase[i].towerName);
         }
         isReady = true;
     }
@@ -98,6 +100,11 @@ public class TowerDatabase : GameplayComponent
         }
 
         return false;
+    }
+
+
+    public List<string> GetTowerNames(){
+        return new List<string>(towerNames);
     }
 
     /// <summary>

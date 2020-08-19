@@ -12,5 +12,8 @@ public class TowerDBEntry : ScriptableObject
     public TowerStats stats;
     
     
+    public override string ToString(){
+        return "name: " + towerName + "\n" + towerDescription + "\n" + stats;
+    }
 
 }
