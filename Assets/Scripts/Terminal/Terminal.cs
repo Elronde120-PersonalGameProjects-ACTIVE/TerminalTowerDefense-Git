@@ -44,45 +44,52 @@ public class Terminal : MonoBehaviour
 
         terminalInput.ActivateInputField();
         awaitingInputSignal.SetActive(true);
+        StartCoroutine(MainLoop());
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
 
-        if(terminalInput.isFocused == false){
-            terminalInput.ActivateInputField();
-        }
-
-        //move text in terminal input area, clear terminal input area, if enter is pressed
-        if(Input.GetKeyDown(KeyCode.Return)){
-            awaitingInputSignal.SetActive(false);
-            PrintToTerminal("> " + terminalInput.text);
-            
-            if(terminalInput.text == "")
-                return;
-
-            //seperate out text segments of input
-            List<string> parsedInput = ParseInput(terminalInput.text);
-            List<string> parsedArgs = new List<string>();
-            for(int i = 1; i < parsedInput.Count; i++){
-                parsedArgs.Add(parsedInput[i]);
+    IEnumerator MainLoop(){
+        while(true){
+            if(terminalInput.isFocused == false){
+                terminalInput.ActivateInputField();
             }
 
-            //search for, and run if found, the appropiate command
-            if(sCommandDatabase.ContainsKey(parsedInput[0])){
-                sCommandDatabase[parsedInput[0]].Excecute(parsedArgs.ToArray());
-            }else{
-                //print if command was not found
-                PrintToTerminal("ERROR: Command " + parsedInput[0] + " not found");
+            //move text in terminal input area, clear terminal input area, if enter is pressed
+            if(Input.GetKeyDown(KeyCode.Return)){
+                yield return StartCoroutine(RunCommand());
+                        
+                terminalInput.text = string.Empty;          
+                awaitingInputSignal.SetActive(true);
             }
-            
-            
-            
-            terminalInput.text = string.Empty;          
-            awaitingInputSignal.SetActive(true);
+            yield return null;
+        }  
+    }
+
+    IEnumerator RunCommand(){
+        awaitingInputSignal.SetActive(false);
+        PrintToTerminal("> " + terminalInput.text);
+        
+        if(terminalInput.text == "")
+            yield break;
+
+        //seperate out text segments of input
+        List<string> parsedInput = ParseInput(terminalInput.text);
+        List<string> parsedArgs = new List<string>();
+        for(int i = 1; i < parsedInput.Count; i++){
+            parsedArgs.Add(parsedInput[i]);
         }
 
+        //search for, and run if found, the appropiate command
+        if(sCommandDatabase.ContainsKey(parsedInput[0])){
+            yield return StartCoroutine(sCommandDatabase[parsedInput[0]].Excecute(parsedArgs.ToArray()));
+        }else{
+            //print if command was not found
+            PrintToTerminal("ERROR: Command " + parsedInput[0] + " not found");
+        }
     }
 
     List<string> ParseInput(string input){

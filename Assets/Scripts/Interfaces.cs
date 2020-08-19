@@ -48,7 +48,8 @@ public abstract class Command : MonoBehaviour
     /// Executes the command
     /// </summary>
     /// <param name="args">arguments to pass into the command</param>
-    public abstract void Excecute(params string[] args);
+    /// /// <returns>Returns true if the command was excecuted successfully, false if any error occurs</returns>
+    public abstract IEnumerator Excecute(params string[] args);
 
     /// <summary>
     /// Geta (or creates) a man page class for this command

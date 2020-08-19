@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b21358a1d5416408ab931cb503731b, type: 3}
   m_Name: TestTower
   m_EditorClassIdentifier: 
-  towerName: 
+  towerName: tower
   towerDescription: 
-  towerGameobject: {fileID: 0}
-  stats: {fileID: 0}
+  towerGameobject: {fileID: 8236251460954252345, guid: 77c25f35570971c4dbac1e195a4b0b1b,
+    type: 3}
+  stats: {fileID: 11400000, guid: caf6116916a942f4d9a2e4333fecb907, type: 2}

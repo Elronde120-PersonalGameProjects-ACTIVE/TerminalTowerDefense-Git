@@ -25,12 +25,13 @@ public class TestCommand : Command
         return Man().usage;
     }
 
-    public override void Excecute(params string[] args){
+    public override IEnumerator Excecute(params string[] args){
         Terminal.PrintToTerminal("Test Command: Printing to terminal!");
         Terminal.PrintToTerminal("Test Command: args:");
         for(int i = 0; i < args.Length; i++){
             Terminal.PrintToTerminal("Test Command: args[" + i + "]: " + args[i]);
         }
+        yield return true;
     }
 
     public override ManPage Man(){

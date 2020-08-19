@@ -24,7 +24,7 @@ public class RemoveCommand : Command
         return Man().usage;
     }
 
-    public override void Excecute(params string[] args){
+    public override IEnumerator Excecute(params string[] args){
          if(NodeManager.instance != null && NodeManager.instance.IsReady()){
             if(args.Length >= 2){
                 int posX;
@@ -32,33 +32,36 @@ public class RemoveCommand : Command
 
                 if(int.TryParse(args[0], out posX) == false){
                     Terminal.PrintToTerminal("posX must be a number!");
-                    return;
+                    yield return false;
                 }
 
                 if(int.TryParse(args[1], out posY) == false){
                     Terminal.PrintToTerminal("posY must be a number!");
-                    return;
+                    yield return false;
                 }
 
                 Node placementNode = NodeManager.instance.GetNode(posX, posY);
                 if(placementNode == null){
                     Terminal.PrintToTerminal("either posX or posY is not a valid location!");
-                    return;
+                    yield return false;
                 }
                 
                 if(placementNode.HasChild()){
                     Destroy(placementNode.transform.GetChild(0).gameObject);
+                    //return % of spent resources here
                     Terminal.PrintToTerminal("Tower removed successfully at " + posX + " " + posY + "!");
                 }
             }
             else{
                 Terminal.PrintToTerminal("Incorrect usage: " + GetUsage());
+                yield return false;
             }
         }
         else{
             Terminal.PrintToTerminal("NodeManager is either not setup or not ready for input!");
+            yield return false;
         }
-    
+        yield return true;
     }
 
     public override ManPage Man(){
