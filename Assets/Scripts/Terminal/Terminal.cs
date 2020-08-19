@@ -86,6 +86,7 @@ public class Terminal : MonoBehaviour
         //search for, and run if found, the appropiate command
         if(sCommandDatabase.ContainsKey(parsedInput[0])){
             yield return StartCoroutine(sCommandDatabase[parsedInput[0]].Excecute(parsedArgs.ToArray()));
+            
         }else{
             //print if command was not found
             PrintToTerminal("ERROR: Command " + parsedInput[0] + " not found");
@@ -125,6 +126,7 @@ public class Terminal : MonoBehaviour
         GameObject obj = Instantiate(sTerminalOutputLinePrefab, new Vector3(0,0,0), Quaternion.identity, sTerminalOutputLineParent.transform);
         LayoutRebuilder.ForceRebuildLayoutImmediate(sTerminalOutputLineParent);
         obj.GetComponentInChildren<TextMeshProUGUI>().text = message + "\n";
+        LayoutRebuilder.ForceRebuildLayoutImmediate(obj.GetComponent<RectTransform>());
     }
 
 }

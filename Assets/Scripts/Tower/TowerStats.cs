@@ -9,5 +9,8 @@ public class TowerStats : ScriptableObject
     public int damage;
     public float range;
     
+    public override string ToString(){
+        return "cost:\n" + cost + "damage: " + damage + "\nrange: " + range;
+    }
 
 }

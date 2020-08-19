@@ -69,4 +69,8 @@ public class Resources
         return new Resources(a.coin * b);
     }
 
+    public override string ToString(){
+        return "coin: " + coin + "\n";
+    }
+
 }
