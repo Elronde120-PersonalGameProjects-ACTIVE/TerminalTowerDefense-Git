@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PlaceCommand : Command
 {
-
-    //TODO:
-    //Reference tower database here
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +24,7 @@ public class PlaceCommand : Command
         return Man().usage;
     }
 
-    public override void Excecute(params string[] args){
-        
+    public override IEnumerator Excecute(params string[] args){
         if(NodeManager.instance != null && NodeManager.instance.IsReady()){
             if(args.Length >= 3){
                 int posX;
@@ -36,28 +32,28 @@ public class PlaceCommand : Command
 
                 if(int.TryParse(args[1], out posX) == false){
                     Terminal.PrintToTerminal("posX must be a number!");
-                    return;
+                    yield break;
                 }
 
                 if(int.TryParse(args[2], out posY) == false){
                     Terminal.PrintToTerminal("posY must be a number!");
-                    return;
+                    yield break;
                 }
 
                 Node placementNode = NodeManager.instance.GetNode(posX, posY);
                 if(placementNode == null){
                     Terminal.PrintToTerminal("either posX or posY is not a valid location!");
-                    return;
+                    yield break;
                 }
 
                 if(placementNode.nodeType == Node.NodeType.PLAYER_TOWER){
                     if(placementNode.HasChild()){
                         Terminal.PrintToTerminal(posX + " " + posY + " already has a tower!");
-                        return;
+                        yield break;
                     }
                     if(TowerDatabase.instance.Check(args[0]) == false){
                         Terminal.PrintToTerminal(args[0] + " is not a valid name!");
-                        return;
+                        yield break;
                     }
 
                     //subtract resources here
@@ -66,18 +62,21 @@ public class PlaceCommand : Command
                 }
                 else{
                     Terminal.PrintToTerminal(posX + " " + posY + " is not a valid tower location!");
-                    return;
+                    yield break;
                 }
 
                 Terminal.PrintToTerminal( args[0] + " tower placed successfully at " + posX + " " + posY + "!");
 
             }else{
                 Terminal.PrintToTerminal("Incorrect usage: " + GetUsage());
+                yield break;
             }
         }
         else{
             Terminal.PrintToTerminal("NodeManager is either not setup or not ready for input!");
+            yield break;
         }
+
     }
 
     public override ManPage Man(){
