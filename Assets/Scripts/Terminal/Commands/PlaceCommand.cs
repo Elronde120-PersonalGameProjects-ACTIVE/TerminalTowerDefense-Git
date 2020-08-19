@@ -56,8 +56,16 @@ public class PlaceCommand : Command
                         yield break;
                     }
 
-                    //subtract resources here
-                    Instantiate(TowerDatabase.instance.Get(args[0]).towerGameobject, placementNode.gameObject.transform.position, Quaternion.identity, placementNode.transform);
+                    TowerDBEntry tower = TowerDatabase.instance.Get(args[0]);
+
+                    if(tower.stats.cost > ResourceManager.instance.GetPlayerResources()){
+                        Terminal.PrintToTerminal("Not enough resources to place " + args[0] + "!");
+                        yield break;
+                    }
+
+                    //subtract resources 
+                    ResourceManager.instance.SetResources(ResourceManager.instance.GetPlayerResources() - tower.stats.cost);
+                    Instantiate(tower.towerGameobject, placementNode.gameObject.transform.position, Quaternion.identity, placementNode.transform);
                     //apply stats to tower script on towerGameobject here
                 }
                 else{
