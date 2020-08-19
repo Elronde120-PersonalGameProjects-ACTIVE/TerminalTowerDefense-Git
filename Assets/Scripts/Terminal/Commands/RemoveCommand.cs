@@ -49,6 +49,7 @@ public class RemoveCommand : Command
                 if(placementNode.HasChild()){
                     Destroy(placementNode.transform.GetChild(0).gameObject);
                     //return % of spent resources here
+                    //get tower object on the node
                     Terminal.PrintToTerminal("Tower removed successfully at " + posX + " " + posY + "!");
                 }
             }

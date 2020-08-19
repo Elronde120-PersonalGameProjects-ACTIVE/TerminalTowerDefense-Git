@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestTower
   m_EditorClassIdentifier: 
   towerName: tower
-  towerDescription: 
+  towerDescription: a debug tower
   towerGameobject: {fileID: 8236251460954252345, guid: 77c25f35570971c4dbac1e195a4b0b1b,
     type: 3}
   stats: {fileID: 11400000, guid: caf6116916a942f4d9a2e4333fecb907, type: 2}
