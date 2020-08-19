@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PlaceCommand : Command
 {
-
-    //TODO:
-    //Reference tower database here
     // Start is called before the first frame update
     void Start()
     {

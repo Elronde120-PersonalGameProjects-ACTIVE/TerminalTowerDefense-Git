@@ -25,7 +25,7 @@ public class Terminal : MonoBehaviour
     static RectTransform sTerminalOutputLineParent;
     static GameObject sTerminalOutputLinePrefab;
 
-    static Dictionary<string, Command> sCommandDatabase = new Dictionary<string, Command>();
+    public static Dictionary<string, Command> sCommandDatabase = new Dictionary<string, Command>();
 
     // Start is called before the first frame update
     void Start()
