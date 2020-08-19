@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7c2d964dd8fc4489cc9f38e63d62e3, type: 3}
   m_Name: TestTowerStats
   m_EditorClassIdentifier: 
-  cost: 0
+  cost:
+    coin: 1
   damage: 0
   range: 0
