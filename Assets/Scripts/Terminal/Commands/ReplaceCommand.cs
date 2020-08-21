@@ -26,7 +26,7 @@ public class ReplaceCommand : Command
 
     public override IEnumerator Excecute(params string[] args){
         
-        if(args.Length >= 3){
+        if(args.Length >= 3 && GameManager.instance.ReadyForPlay()){
             yield return StartCoroutine(Terminal.sCommandDatabase["remove"].Excecute(args[1], args[2]));      
             yield return StartCoroutine(Terminal.sCommandDatabase["place"].Excecute(args[0], args[1], args[2]));
         }else{

@@ -25,14 +25,13 @@ public class TowerCommand : Command
     }
 
     public override IEnumerator Excecute(params string[] args){
-       if(args.Length >= 1){
+       if(args.Length >= 1 && GameManager.instance.ReadyForPlay()){
             if(TowerDatabase.instance.Check(args[0]) == false){
                 Terminal.PrintToTerminal("Unknown Tower!");
                 yield break;
             }
 
             TowerDBEntry tower = TowerDatabase.instance.Get(args[0]);
-            Debug.Log(tower.ToString());
             Terminal.PrintToTerminal(tower.ToString());
 
         }else{

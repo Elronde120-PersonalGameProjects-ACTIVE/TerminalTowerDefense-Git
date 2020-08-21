@@ -25,9 +25,10 @@ public class CommandsCommand : Command
     }
 
     public override IEnumerator Excecute(params string[] args){
-        
-        foreach(KeyValuePair<string, Command> command in Terminal.sCommandDatabase){
-            Terminal.PrintToTerminal(command.Value.GetCommandName());
+        if(GameManager.instance.ReadyForPlay()){
+            foreach(KeyValuePair<string, Command> command in Terminal.sCommandDatabase){
+                Terminal.PrintToTerminal(command.Value.GetCommandName());
+            }
         }
 
         yield return true;

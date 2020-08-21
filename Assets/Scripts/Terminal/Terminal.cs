@@ -6,7 +6,6 @@ using TMPro;
 
 public class Terminal : MonoBehaviour
 {
-
     [SerializeField]
     InputField terminalInput = null;
 
@@ -19,17 +18,21 @@ public class Terminal : MonoBehaviour
     [SerializeField]
     RectTransform terminalOutputLineParent = null;
 
+    [HideInInspector]
+    public bool isReady = false;
     public Command[] initialCommandDatabase;
 
     static InputField sTerminalInput;
     static RectTransform sTerminalOutputLineParent;
     static GameObject sTerminalOutputLinePrefab;
 
+    public static Terminal instance;
     public static Dictionary<string, Command> sCommandDatabase = new Dictionary<string, Command>();
 
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         sTerminalInput = terminalInput;
         sTerminalOutputLineParent = terminalOutputLineParent;
         sTerminalOutputLinePrefab = terminalOutputLinePrefab;
@@ -44,7 +47,8 @@ public class Terminal : MonoBehaviour
 
         terminalInput.ActivateInputField();
         awaitingInputSignal.SetActive(true);
-        StartCoroutine(MainLoop());
+        isReady = true;
+        //StartCoroutine(MainLoop());
     }
 
     // Update is called once per frame
@@ -52,7 +56,7 @@ public class Terminal : MonoBehaviour
     {
     }
 
-    IEnumerator MainLoop(){
+    public IEnumerator MainLoop(){
         while(true){
             if(terminalInput.isFocused == false){
                 terminalInput.ActivateInputField();

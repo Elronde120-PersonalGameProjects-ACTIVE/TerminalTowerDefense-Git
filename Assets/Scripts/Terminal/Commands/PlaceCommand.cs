@@ -25,7 +25,7 @@ public class PlaceCommand : Command
     }
 
     public override IEnumerator Excecute(params string[] args){
-        if(NodeManager.instance != null && NodeManager.instance.IsReady()){
+        if(NodeManager.instance != null && GameManager.instance.ReadyForPlay()){
             if(args.Length >= 3){
                 int posX;
                 int posY;

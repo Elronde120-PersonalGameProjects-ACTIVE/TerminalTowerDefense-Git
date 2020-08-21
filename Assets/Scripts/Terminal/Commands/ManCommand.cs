@@ -25,7 +25,7 @@ public class ManCommand : Command
     }
 
     public override IEnumerator Excecute(params string[] args){
-        if(args.Length >= 1){
+        if(args.Length >= 1 && GameManager.instance.ReadyForPlay()){
             if(Terminal.sCommandDatabase.ContainsKey(args[0]) == false){
                 Terminal.PrintToTerminal("Unknown command to print man of!");
                 yield break;

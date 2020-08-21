@@ -25,8 +25,10 @@ public class TowersCommand : Command
     }
 
     public override IEnumerator Excecute(params string[] args){
-        foreach(string name in TowerDatabase.instance.GetTowerNames()){
-            Terminal.PrintToTerminal(name);
+        if(GameManager.instance.ReadyForPlay()){
+            foreach(string name in TowerDatabase.instance.GetTowerNames()){
+                Terminal.PrintToTerminal(name);
+            }
         }
         yield return true;
     }
