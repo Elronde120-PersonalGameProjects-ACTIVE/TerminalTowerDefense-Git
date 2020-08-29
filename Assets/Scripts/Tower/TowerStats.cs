@@ -6,9 +6,25 @@ using UnityEngine;
 public class TowerStats : ScriptableObject
 {
     public Resources cost;
+
+    /// <summary>
+    /// How much damage this tower will deal to its target
+    /// </summary>
     public int damage;
+
+    /// <summary>
+    /// The maximum range this tower can target and shoot
+    /// </summary>
     public float range;
 
+    /// <summary>
+    /// How many ticks until this tower can fire
+    /// </summary>
+    public float tickFireRate;
+
+    /// <summary>
+    /// What this tower can target
+    /// </summary>
     public string[] targetableTags;
     
     public override string ToString(){
