@@ -65,8 +65,9 @@ public class PlaceCommand : Command
 
                     //subtract resources 
                     ResourceManager.instance.SetResources(ResourceManager.instance.GetPlayerResources() - tower.stats.cost);
-                    Instantiate(tower.towerGameobject, placementNode.gameObject.transform.position, Quaternion.identity, placementNode.transform);
-                    //apply stats to tower script on towerGameobject here
+                    GameObject obj = Instantiate(tower.towerGameobject, placementNode.gameObject.transform.position, Quaternion.identity, placementNode.transform);
+                    //apply stats to tower
+                    obj.GetComponent<Tower>().stats = tower.stats;
                 }
                 else{
                     Terminal.PrintToTerminal(posX + " " + posY + " is not a valid tower location!");

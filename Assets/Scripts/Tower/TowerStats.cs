@@ -8,9 +8,20 @@ public class TowerStats : ScriptableObject
     public Resources cost;
     public int damage;
     public float range;
+
+    public string[] targetableTags;
     
     public override string ToString(){
-        return "cost:\n" + cost + "damage: " + damage + "\nrange: " + range;
+        string initial = "cost:\n" + cost + "damage: " + damage + "\nrange: " + range;
+        initial += "\nTargetable:";
+        if(targetableTags != null && targetableTags.Length > 0){
+            for(int i = 0; i < targetableTags.Length; i++){
+                initial += "\n" + targetableTags[i];
+            }
+        }else{
+            initial += "\nNone";
+        }
+        return initial;
     }
 
 }
