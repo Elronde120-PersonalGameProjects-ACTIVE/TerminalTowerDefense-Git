@@ -20,12 +20,16 @@ public class Tower : MonoBehaviour
     void Start()
     {
         sprite.sprite = initialSprite;
-        InvokeRepeating("UpdateTarget", 0.0f, 0.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        
+    }
+
+    void UpdateSprite(object sender, TimeTickSystem.OnTickEventArgs e){
         if(target != null){
             //angle calculations on sprites assume gameobject will NOT be rotating
             Vector3 targetDir = target.transform.position - gameObject.transform.position;
@@ -42,10 +46,9 @@ public class Tower : MonoBehaviour
                 }          
             }
         }
-        
     }
 
-    void UpdateTarget(){
+    void UpdateTarget(object sender, TimeTickSystem.OnTickEventArgs e){
         if(stats != null){
             if(stats.targetableTags != null){
                 List<GameObject> enemies = new List<GameObject>();
@@ -70,6 +73,24 @@ public class Tower : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// This function is called when the MonoBehaviour will be destroyed.
+    /// </summary>
+    void OnEnable()
+    {
+        TimeTickSystem.onTick += UpdateTarget;
+        TimeTickSystem.onTick += UpdateSprite;
+    }
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        TimeTickSystem.onTick -= UpdateTarget;
+        TimeTickSystem.onTick -= UpdateSprite;
     }
 
     [System.Serializable]
