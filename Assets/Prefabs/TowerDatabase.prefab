@@ -40,8 +40,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4322428459776494505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 623b4e6c2aff3424799949325ebc1a62, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ad2f2ed74e072441b9587befbdd11b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   initialTowerDatabase:
-  - {fileID: 11400000, guid: 06397f1fc323155438f8a5f1dbbe11ab, type: 2}
+  - {fileID: 11400000, guid: b8731093b4a6733448abe69f791bceaa, type: 2}

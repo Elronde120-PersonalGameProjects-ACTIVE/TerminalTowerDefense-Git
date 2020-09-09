@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99b21358a1d5416408ab931cb503731b, type: 3}
+  m_Script: {fileID: 11500000, guid: f681b167ebb10a042b1f47e9ccbbf1fb, type: 3}
   m_Name: TestTower
   m_EditorClassIdentifier: 
   towerName: tower
   towerDescription: a debug tower
-  towerGameobject: {fileID: 8236251460954252345, guid: 77c25f35570971c4dbac1e195a4b0b1b,
+  towerGameobject: {fileID: 8236251460954252345, guid: bcb8e77aad702614d9986735aa064858,
     type: 3}
-  stats: {fileID: 11400000, guid: caf6116916a942f4d9a2e4333fecb907, type: 2}
+  stats: {fileID: 11400000, guid: 55e5d3ae9e53d9045ba3e49413f5f533, type: 2}
