@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tower DB Entry", menuName = "ScriptableObjects/TowerDBEntry", order = 1)]
+[CreateAssetMenu(fileName = "New Tower Database Entry", menuName = "ScriptableObjects/Tower/Tower Database Entry", order = 1)]
 public class TowerDBEntry : ScriptableObject
 {
     

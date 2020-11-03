@@ -9,7 +9,7 @@ public class TimeTickSystem : MonoBehaviour
         public int tick;
     }
     public static event EventHandler<OnTickEventArgs> onTick;
-    private const float TICK_TIMER_MAX = .2f; //5 ticks per second
+    public static float TICK_TIMER_MAX = 0.2f; //5 ticks per second
     private int tick;
     private float tickTimer;
 
@@ -17,7 +17,7 @@ public class TimeTickSystem : MonoBehaviour
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
-    void Awake()
+    void Update()
     {
         tickTimer += Time.deltaTime;
         if(tickTimer >= TICK_TIMER_MAX){

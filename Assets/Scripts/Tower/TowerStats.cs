@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tower Stats", menuName = "ScriptableObjects/TowerStats", order = 1)]
+[CreateAssetMenu(fileName = "New Tower Stats", menuName = "ScriptableObjects/Tower/Tower Stats", order = 1)]
 public class TowerStats : ScriptableObject
 {
     public Resources cost;
