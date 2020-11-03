@@ -14,9 +14,9 @@ public class NodeManager : GameplayComponent
     private Node[,] nodes;
     public Node nodePrefab;
     public GameObject nodeParent;
-    private Vector2Int playerBaseStart;
+    public Vector2Int playerBaseStart {get; private set;}
     private Vector2Int enemyStart;
-    private Vector2Int[] enemyPath;
+    public Vector2Int[] enemyPath {get; private set;}
     public NodeManagerPreview preview;
     // Start is called before the first frame update
     void Start()
