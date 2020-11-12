@@ -9,3 +9,8 @@ public interface IAIPathProvider{
     Vector2Int[] GetPath();
 }
 
+public interface AISpawnProvider{
+    void Spawn(GameObject AIToSpawn);
+
+}
+
