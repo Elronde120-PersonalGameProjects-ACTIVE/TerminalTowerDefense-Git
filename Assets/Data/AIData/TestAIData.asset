@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TestAIData
   m_EditorClassIdentifier: 
   agentName: Default AI Name
+  prefab: {fileID: 8655472457486985353, guid: 44ae2542a67d9d04f878e781a07fc3cc, type: 3}
   moveSpeed: 0.15
   playerBaseDamage: 0
   navigationTickRate: 1

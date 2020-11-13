@@ -1,11 +1,24 @@
 ﻿using UnityEngine;
 
-public interface IAIMovementProvider 
+namespace ConsoleTowerDefense.AI
 {
-    void Move(Vector2Int[] waypoints, ref int currentTargetWaypoint, float speed);
+    public interface IAIMovementProvider
+    {
+        void Move(Vector2Int[] waypoints, ref int currentTargetWaypoint, float speed);
+    }
+
+    public interface IAIPathProvider
+    {
+        Vector2Int[] GetPath();
+    }
 }
 
-public interface IAIPathProvider{
-    Vector2Int[] GetPath();
+namespace ConsoleTowerDefense.AI.Spawner
+{
+    public interface AISpawnProvider
+    {
+        void Spawn(GameObject AIToSpawn);
+
+    }
 }
 
