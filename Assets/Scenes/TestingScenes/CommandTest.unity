@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 82470745}
   - component: {fileID: 82470747}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: AISpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,6 +410,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 265405491}
     m_Modifications:
+    - target: {fileID: 1295931920288700986, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_Text
+      value: Type 'commands' for all available commands
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_CaretWidth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_SelectionColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_SelectionColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_SelectionColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_SelectionColor.a
+      value: 0.27058825
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_CustomCaretColor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_CaretColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_CaretColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295931920660279018, guid: ccda490c7367de741bb2b3a86928466a,
+        type: 3}
+      propertyPath: m_CaretColor.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1295931921093584502, guid: ccda490c7367de741bb2b3a86928466a,
         type: 3}
       propertyPath: m_Name
