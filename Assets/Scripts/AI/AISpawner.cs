@@ -6,6 +6,7 @@ namespace ConsoleTowerDefense.AI.Spawner
 {
     public class AISpawner : MonoBehaviour
     {
+        public static AISpawner instance;
         public AIWaveData currentWave => levelWaves[currentWaveIndex];
         public int currentWaveTickSpawnRate => levelWaves[currentWaveIndex].ticksBetweenSpawns;
 
@@ -23,17 +24,12 @@ namespace ConsoleTowerDefense.AI.Spawner
         public bool reachedTickBetweenWaves => internalTick % ticksBetweenWaves == 0 && internalTick != 0;
 
         public bool canSpawnWave => reachedTickBetweenWaves && Utils.IsValidIndex(currentWaveIndex, (ICollection)levelWaves) && spawningWave == false;
+        
+        public bool Started { get; private set; }
 
         private void Start()
         {
-            if (spawnProvider == null)
-            {
-                Debug.LogError("ERROR: " + this.name + " does not have a AISpawnProvider attached to it. Cannot spawn enemies!");
-            }
-            else
-            {
-                TimeTickSystem.onTick += (object sender, TimeTickSystem.OnTickEventArgs args) => internalTick++; //subscription will be relagated to a command (I.E. start)
-            }
+            instance = this;
             spawningWave = false;
             
         }
@@ -85,6 +81,24 @@ namespace ConsoleTowerDefense.AI.Spawner
         void SetSpawnProvider(AISpawnProvider newSpawnProvider)
         {
             _spawnProvider = newSpawnProvider;
+        }
+
+        public void StartWaveSpawning()
+        {
+            if (Started)
+            {
+                return;
+            }
+
+            Started = true;
+            if (spawnProvider == null)
+            {
+                Debug.LogError("ERROR: " + this.name + " does not have a AISpawnProvider attached to it. Cannot spawn enemies!");
+            }
+            else
+            {
+                TimeTickSystem.onTick += (object sender, TimeTickSystem.OnTickEventArgs args) => internalTick++; //subscription will be relagated to a command (I.E. start)
+            }
         }
     }
 }

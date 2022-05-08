@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using ConsoleTowerDefense.AI.Spawner;
+using UnityEditorInternal;
 using UnityEngine;
 
-public class PauseCommand : Command
+public class StartCommand : Command
 {
     // Start is called before the first frame update
     void Start()
@@ -26,8 +28,12 @@ public class PauseCommand : Command
 
     public override IEnumerator Excecute(params string[] args)
     {
-        TimeTickSystem.Paused = !TimeTickSystem.Paused;
-        Terminal.PrintToTerminal($"Simulation is now {(TimeTickSystem.Paused ? "paused" :"unpaused")}");
+        if (AISpawner.instance.Started)
+        {
+            yield break;
+        }
+        AISpawner.instance.StartWaveSpawning();
+        Terminal.PrintToTerminal($"Simulation is now starting");
         yield return null;
     }
 
@@ -35,10 +41,10 @@ public class PauseCommand : Command
     {
         return new ManPage()
         {
-            commandName = "pause",
-            description = "Pauses/Unpauses the games simulation speed",
-            example = "pause",
-            usage = "pause"
+            commandName = "start",
+            description = "Starts the simulation. Using this command more than once does nothing",
+            example = "start",
+            usage = "start"
         };
     }
 }
