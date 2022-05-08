@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using ConsoleTowerDefense.AI;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
@@ -13,8 +15,11 @@ public class Tower : MonoBehaviour
     [SerializeField]
     private SpriteAnglePair[] rightSprites;
     private Transform target;
+    private AIBaseController targetAIComponent;
     
     private TowerStats internalStats;
+
+    private int currentFireTick = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -36,6 +41,8 @@ public class Tower : MonoBehaviour
             Vector3 forward = transform.up;
             float angle = Vector3.SignedAngle(forward, targetDir, Vector3.forward);
 
+            Debug.DrawLine(transform.position, target.transform.position, Color.green, 1f);
+            
             for(int i = 0; i < leftSprites.Length; i++){
                 if(angle <= leftSprites[i].maxAngle && angle >= leftSprites[i].minAngle){
                     sprite.sprite = leftSprites[i].sprite;
@@ -50,7 +57,7 @@ public class Tower : MonoBehaviour
 
     void UpdateTarget(object sender, TimeTickSystem.OnTickEventArgs e){
         if(stats != null){
-            if(stats.targetableTags != null){
+            if(stats.targetableTags != null && target == null){
                 List<GameObject> enemies = new List<GameObject>();
                 for(int i = 0; i < stats.targetableTags.Length; i++){
                     enemies.AddRange(GameObject.FindGameObjectsWithTag(stats.targetableTags[i]));
@@ -68,10 +75,32 @@ public class Tower : MonoBehaviour
 
                 if(nearestEnemy != null && shortestDistance <= stats.range){
                     target = nearestEnemy.transform;
+                    nearestEnemy.TryGetComponent<AIBaseController>(out targetAIComponent);
                 }else{
                     target = null;
                 }
             }
+        }
+    }
+
+    void UpdateFireLogic(object sender, TimeTickSystem.OnTickEventArgs e)
+    {
+        if (stats != null)
+        {
+            currentFireTick++;
+
+            if (currentFireTick >= internalStats.tickFireRate)
+            {
+                Shoot();
+            }
+        }
+    }
+
+    void Shoot()
+    {
+        if (targetAIComponent != null)
+        {
+            targetAIComponent.TakeDamage(internalStats.damage);
         }
     }
 
@@ -82,6 +111,7 @@ public class Tower : MonoBehaviour
     {
         TimeTickSystem.onTick += UpdateTarget;
         TimeTickSystem.onTick += UpdateSprite;
+        TimeTickSystem.onTick += UpdateFireLogic;
     }
 
     /// <summary>
@@ -98,5 +128,15 @@ public class Tower : MonoBehaviour
         public Sprite sprite;
         public float maxAngle;
         public float minAngle;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, internalStats.range);
+        
+        if (target != null)
+        {
+            Gizmos.DrawLine(transform.position, target.position);
+        }
     }
 }

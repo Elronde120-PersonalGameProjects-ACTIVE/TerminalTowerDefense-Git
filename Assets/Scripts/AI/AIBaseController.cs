@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace ConsoleTowerDefense.AI
         private Vector2Int[] path;
         private int currentPathTarget;
         private int currentNavigationTick = 0;
+        private int currentHealth = 0;
 
         // Start is called before the first frame update
         void Start()
@@ -30,6 +32,8 @@ namespace ConsoleTowerDefense.AI
             }else{
                 path = pathGetter.GetPath();
             }
+
+            currentHealth = baseData.startingHealth;
         }
 
         void OnTick(object sender, TimeTickSystem.OnTickEventArgs args){
@@ -41,6 +45,22 @@ namespace ConsoleTowerDefense.AI
                 movement.Move(path, ref currentPathTarget, baseData.moveSpeed);             
                 currentNavigationTick = 0;
             }
+        }
+
+        public void TakeDamage(int damageAmount)
+        {
+            Debug.Log("taking damage");
+            currentHealth -= damageAmount;
+
+            if (currentHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            TimeTickSystem.onTick -= OnTick;
         }
     }
 }
