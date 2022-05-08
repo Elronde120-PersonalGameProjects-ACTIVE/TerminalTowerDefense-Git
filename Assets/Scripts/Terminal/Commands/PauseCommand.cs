@@ -27,6 +27,7 @@ public class PauseCommand : Command
     public override IEnumerator Excecute(params string[] args)
     {
         TimeTickSystem.Paused = !TimeTickSystem.Paused;
+        Terminal.PrintToTerminal($"Simulation is now {(TimeTickSystem.Paused ? "paused" :"unpaused")}");
         yield return null;
     }
 
@@ -34,7 +35,7 @@ public class PauseCommand : Command
     {
         return new ManPage()
         {
-            commandName = "Pause",
+            commandName = "pause",
             description = "Pauses/Unpauses the games simulation speed",
             example = "pause"
         };
