@@ -13,12 +13,18 @@ public class TimeTickSystem : MonoBehaviour
     private int tick;
     private float tickTimer;
 
+    public static bool Paused = false;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Update()
     {
+        if (Paused)
+        {
+            return;
+        }
+        
         tickTimer += Time.deltaTime;
         if(tickTimer >= TICK_TIMER_MAX){
             tickTimer -= TICK_TIMER_MAX;
