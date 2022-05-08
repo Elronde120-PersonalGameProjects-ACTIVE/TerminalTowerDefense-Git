@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f681b167ebb10a042b1f47e9ccbbf1fb, type: 3}
+  m_Name: GunnerDatabaseEntry
+  m_EditorClassIdentifier: 
+  towerName: Gunner
+  towerDescription: A simple tower, fires at any enemy it detects
+  towerGameobject: {fileID: 8236251460954252345, guid: e0002c140b08cd447b52483250843b6a,
+    type: 3}
+  stats: {fileID: 11400000, guid: 235f2765ebc38544f8bd7ed74868ddf7, type: 2}

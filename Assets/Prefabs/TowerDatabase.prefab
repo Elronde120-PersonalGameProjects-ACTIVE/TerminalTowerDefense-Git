@@ -45,3 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialTowerDatabase:
   - {fileID: 11400000, guid: b8731093b4a6733448abe69f791bceaa, type: 2}
+  - {fileID: 11400000, guid: 7271f95701cb7bd4a8acea9680f2800f, type: 2}
