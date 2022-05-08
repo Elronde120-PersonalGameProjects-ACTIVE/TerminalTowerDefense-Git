@@ -91,6 +91,7 @@ public class Tower : MonoBehaviour
 
             if (currentFireTick >= internalStats.tickFireRate)
             {
+                currentFireTick = 0;
                 Shoot();
             }
         }

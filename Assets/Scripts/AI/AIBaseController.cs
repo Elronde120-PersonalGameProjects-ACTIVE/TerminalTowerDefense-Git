@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace ConsoleTowerDefense.AI
@@ -8,6 +9,7 @@ namespace ConsoleTowerDefense.AI
     public class AIBaseController : MonoBehaviour
     {
         public AIData baseData;
+        public TextMeshProUGUI healthText;
         private IAIMovementProvider movement;
         private IAIPathProvider pathGetter;
         private Vector2Int[] path;
@@ -34,6 +36,7 @@ namespace ConsoleTowerDefense.AI
             }
 
             currentHealth = baseData.startingHealth;
+            SetHealthText();
         }
 
         void OnTick(object sender, TimeTickSystem.OnTickEventArgs args){
@@ -51,6 +54,7 @@ namespace ConsoleTowerDefense.AI
         {
             Debug.Log("taking damage");
             currentHealth -= damageAmount;
+            SetHealthText();
 
             if (currentHealth <= 0)
             {
@@ -61,6 +65,11 @@ namespace ConsoleTowerDefense.AI
         private void OnDestroy()
         {
             TimeTickSystem.onTick -= OnTick;
+        }
+
+        private void SetHealthText()
+        {
+            healthText.text = currentHealth.ToString();
         }
     }
 }
