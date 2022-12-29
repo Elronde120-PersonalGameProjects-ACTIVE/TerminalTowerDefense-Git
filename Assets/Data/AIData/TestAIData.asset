@@ -17,5 +17,7 @@ MonoBehaviour:
   moveSpeed: 0.15
   playerBaseDamage: 0
   navigationTickRate: 1
+  navigationTickInterval: 5
+  startingHealth: 5
   resourcesToGiveOnDeath:
     coin: 0

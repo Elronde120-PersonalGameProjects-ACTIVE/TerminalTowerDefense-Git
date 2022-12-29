@@ -15,6 +15,7 @@ namespace ConsoleTowerDefense.AI
         public float moveSpeed = 1f;
         public float playerBaseDamage;
         public int navigationTickRate; //how many ticks before the AI can move
+        public int navigationTickInterval;
         public int startingHealth = 1;
         public Resources resourcesToGiveOnDeath;
 

@@ -28,11 +28,11 @@ public class StartCommand : Command
 
     public override IEnumerator Excecute(params string[] args)
     {
-        if (AISpawner.instance.Started)
+        if (AISpawnerV2.Instance.SpawningWaves)
         {
             yield break;
         }
-        AISpawner.instance.StartWaveSpawning();
+        AISpawnerV2.Instance.StartWaveSpawning();
         Terminal.PrintToTerminal($"Simulation is now starting");
         yield return null;
     }

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ConsoleTowerDefense.AI;
 using UnityEngine;
 
@@ -14,12 +14,11 @@ public class Tower : MonoBehaviour
 
     [SerializeField]
     private SpriteAnglePair[] rightSprites;
-    private Transform target;
-    private AIBaseController targetAIComponent;
+    private AIBaseController target;
     
     private TowerStats internalStats;
 
-    private int currentFireTick = 0;
+    private int m_currentFireTick = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -34,6 +33,13 @@ public class Tower : MonoBehaviour
         
     }
 
+    void OnTick(object sender, TimeTickSystem.OnTickEventArgs e)
+    {
+        UpdateSprite(sender, e);
+        UpdateTarget(sender, e);
+        UpdateFireLogic(sender, e);
+    }
+
     void UpdateSprite(object sender, TimeTickSystem.OnTickEventArgs e){
         if(target != null){
             //angle calculations on sprites assume gameobject will NOT be rotating
@@ -41,7 +47,7 @@ public class Tower : MonoBehaviour
             Vector3 forward = transform.up;
             float angle = Vector3.SignedAngle(forward, targetDir, Vector3.forward);
 
-            Debug.DrawLine(transform.position, target.transform.position, Color.green, 1f);
+            Debug.DrawLine(transform.position, target.transform.position, Color.green);
             
             for(int i = 0; i < leftSprites.Length; i++){
                 if(angle <= leftSprites[i].maxAngle && angle >= leftSprites[i].minAngle){
@@ -55,54 +61,89 @@ public class Tower : MonoBehaviour
         }
     }
 
-    void UpdateTarget(object sender, TimeTickSystem.OnTickEventArgs e){
-        if(stats != null){
-            if(stats.targetableTags != null && target == null){
-                List<GameObject> enemies = new List<GameObject>();
-                for(int i = 0; i < stats.targetableTags.Length; i++){
-                    enemies.AddRange(GameObject.FindGameObjectsWithTag(stats.targetableTags[i]));
-                }
+    void UpdateTarget(object sender, TimeTickSystem.OnTickEventArgs e)
+    {
 
-                float shortestDistance = Mathf.Infinity;
-                GameObject nearestEnemy = null;
-                foreach(GameObject enemy in enemies){
-                    float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-                    if(distanceToEnemy < shortestDistance){
-                        shortestDistance = distanceToEnemy;
-                        nearestEnemy = enemy;
-                    }
-                }
+        if (stats == null)
+        {
+            return;
+        }
 
-                if(nearestEnemy != null && shortestDistance <= stats.range){
-                    target = nearestEnemy.transform;
-                    nearestEnemy.TryGetComponent<AIBaseController>(out targetAIComponent);
-                }else{
-                    target = null;
-                }
-            }
+        if (stats.targetableTags == null)
+        {
+            return;
+        }
+
+        if (target == null)
+        {
+            SelectTarget();
         }
     }
 
     void UpdateFireLogic(object sender, TimeTickSystem.OnTickEventArgs e)
     {
-        if (stats != null)
+        if(stats == null)
         {
-            currentFireTick++;
-
-            if (currentFireTick >= internalStats.tickFireRate)
-            {
-                currentFireTick = 0;
-                Shoot();
-            }
+            return;
         }
+
+        // Increase current fire tick
+        m_currentFireTick++;
+
+        if (target == null || m_currentFireTick < internalStats.tickFireRate)
+        {
+            return;
+        }
+
+        // We can shoot, reset current fire tick and shoot at the target
+        m_currentFireTick = 0;
+        Shoot();
     }
 
     void Shoot()
     {
-        if (targetAIComponent != null)
+        if(target == null)
         {
-            targetAIComponent.TakeDamage(internalStats.damage);
+            return;
         }
+
+        target.TakeDamage(internalStats.damage);
+    }
+
+    void SelectTarget()
+    {
+        // Create a list of all enemies in the scene
+        var enemies = new List<AIBaseController>();
+
+        // Search for all enemies
+        foreach (var tag in stats.targetableTags)
+        {
+            // Get all enemies with the current tag and add them to the enemies list
+            var enemyGameObjects = GameObject.FindGameObjectsWithTag(tag).ToList<GameObject>();
+            enemyGameObjects.ForEach((enemy) => enemies.Add(enemy.GetComponent<AIBaseController>()));
+        }
+
+        // If no enemies, return early
+        if (enemies.Count == 0)
+        {
+            return;
+        }
+
+        // Find the closest enemy that is within bounds
+        float shortestDistance = Mathf.Infinity;
+        AIBaseController closestEnemy = null;
+        foreach (var enemy in enemies)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToEnemy < shortestDistance && distanceToEnemy <= stats.range)
+            {
+                shortestDistance = distanceToEnemy;
+                closestEnemy = enemy;
+            }
+        }
+
+        // Set to our target that is selected (if any)
+        target = closestEnemy;
     }
 
     /// <summary>
@@ -110,9 +151,7 @@ public class Tower : MonoBehaviour
     /// </summary>
     void OnEnable()
     {
-        TimeTickSystem.onTick += UpdateTarget;
-        TimeTickSystem.onTick += UpdateSprite;
-        TimeTickSystem.onTick += UpdateFireLogic;
+        TimeTickSystem.onTick += OnTick;
     }
 
     /// <summary>
@@ -120,8 +159,7 @@ public class Tower : MonoBehaviour
     /// </summary>
     void OnDisable()
     {
-        TimeTickSystem.onTick -= UpdateTarget;
-        TimeTickSystem.onTick -= UpdateSprite;
+        TimeTickSystem.onTick -= OnTick;
     }
 
     [System.Serializable]
@@ -135,9 +173,9 @@ public class Tower : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, internalStats.range);
         
-        if (target != null)
+        /*if (target != null)
         {
             Gizmos.DrawLine(transform.position, target.position);
-        }
+        }*/
     }
 }

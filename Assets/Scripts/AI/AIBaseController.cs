@@ -44,7 +44,7 @@ namespace ConsoleTowerDefense.AI
                 return;
             currentNavigationTick += 1;
 
-            if(currentNavigationTick > baseData.navigationTickRate){
+            if(currentNavigationTick % baseData.navigationTickInterval == 0){
                 movement.Move(path, ref currentPathTarget, baseData.moveSpeed);             
                 currentNavigationTick = 0;
             }

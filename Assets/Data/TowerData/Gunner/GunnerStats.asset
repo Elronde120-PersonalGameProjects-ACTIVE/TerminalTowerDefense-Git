@@ -15,7 +15,7 @@ MonoBehaviour:
   cost:
     coin: 0
   damage: 1
-  range: 1
+  range: 2
   tickFireRate: 5
   targetableTags:
   - Enemy1
