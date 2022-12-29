@@ -23,6 +23,7 @@ namespace ConsoleTowerDefense.AI.Spawner
         /// The current wave index to be used in <see cref="m_waveData"/>. set to -1 if waves have not started
         /// </summary>
         private int m_currentWaveIndex = -1;
+        private int m_currentWaveGroupIndex = -1;
 
         private int m_internalTickCounter = 0;
 
@@ -60,6 +61,7 @@ namespace ConsoleTowerDefense.AI.Spawner
 
             // Reset current wave index
             m_currentWaveIndex = 0;
+            m_currentWaveGroupIndex = 0;
 
             StartCoroutine(SpawnWavesCoroutine());
         }
@@ -79,17 +81,27 @@ namespace ConsoleTowerDefense.AI.Spawner
             // Get the current wave
             var currentWave = m_waveData[m_currentWaveIndex];
 
-            // Spawn each enemy in the wave
-            for(int i = 0; i < currentWave.count; i++)
+            // Spawn each group in the wave
+            foreach(var group in currentWave.Groups)
             {
-                // Place the enemy at the spawn point
-                var spawnedAIData = currentWave.enemyToSpawn;
-                Instantiate(spawnedAIData.prefab, new Vector3(NodeManager.instance.enemyStart.x, NodeManager.instance.enemyStart.y), Quaternion.identity);
-
-                // Wait for the enemy to move before spawning another enemy
-                var waitTime = m_internalTickCounter + spawnedAIData.navigationTickInterval;
+                // Wait for the group start spawn delay
+                var waitTime = m_internalTickCounter + group.GroupStartDelayTicks;
                 yield return new WaitUntil(() => m_internalTickCounter == waitTime);
+
+                // Start spawning in the AI group
+                for (int i = 0; i < group.count; i++)
+                {
+                    // Place the enemy at the spawn point
+                    var spawnedAIData = group.enemyToSpawn;
+                    Instantiate(spawnedAIData.prefab, new Vector3(NodeManager.instance.enemyStart.x, NodeManager.instance.enemyStart.y), Quaternion.identity);
+
+                    // Wait for the enemy to move before spawning another enemy
+                    waitTime = m_internalTickCounter + spawnedAIData.navigationTickInterval;
+                    yield return new WaitUntil(() => m_internalTickCounter == waitTime);
+                }
+
             }
+            
 
             // Increase wave index
             m_currentWaveIndex += 1;
