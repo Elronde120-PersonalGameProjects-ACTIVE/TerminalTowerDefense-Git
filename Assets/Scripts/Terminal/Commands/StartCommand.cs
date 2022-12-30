@@ -30,6 +30,7 @@ public class StartCommand : Command
     {
         if (AISpawnerV2.Instance.SpawningWaves)
         {
+            Terminal.PrintToTerminal("Wave spawning in progress, cannot start next wave!", Color.red);
             yield break;
         }
         AISpawnerV2.Instance.StartWaveSpawning();
