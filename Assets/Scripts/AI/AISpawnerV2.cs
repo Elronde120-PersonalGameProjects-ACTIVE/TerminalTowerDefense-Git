@@ -22,8 +22,7 @@ namespace ConsoleTowerDefense.AI.Spawner
         /// <summary>
         /// The current wave index to be used in <see cref="m_waveData"/>. set to -1 if waves have not started
         /// </summary>
-        private int m_currentWaveIndex = -1;
-        private int m_currentWaveGroupIndex = -1;
+        private int m_currentWaveIndex = 0;
 
         private int m_internalTickCounter = 0;
 
@@ -59,10 +58,6 @@ namespace ConsoleTowerDefense.AI.Spawner
 
             SpawningWaves = true;
 
-            // Reset current wave index
-            m_currentWaveIndex = 0;
-            m_currentWaveGroupIndex = 0;
-
             StartCoroutine(SpawnWavesCoroutine());
         }
 
@@ -73,6 +68,8 @@ namespace ConsoleTowerDefense.AI.Spawner
             {
                 yield break;
             }
+
+            Terminal.PrintToTerminal($"Spawning wave {m_currentWaveIndex + 1}/{m_waveData.Count}");
 
             // Wait for the wave spawn delay
             var waveSpawnDelay = m_internalTickCounter + m_waveStartDelayTicks;
@@ -102,24 +99,28 @@ namespace ConsoleTowerDefense.AI.Spawner
 
             }
             
+            OnWaveFinishedSpawning();
+            Terminal.PrintToTerminal("Wave Finished");
 
-            // Increase wave index
-            m_currentWaveIndex += 1;
-
-            if(m_currentWaveIndex>= m_waveData.Count)
+            if (m_currentWaveIndex>= m_waveData.Count)
             {
                 // We have spawned all waves, return here
                 OnAllWavesSpawned();
                 yield break;
-            }
-
-            // Start the next wave
-            StartCoroutine(SpawnWavesCoroutine());
+            }         
         }
 
         private void OnAllWavesSpawned()
         {
+            
+        }
+
+        private void OnWaveFinishedSpawning()
+        {
             SpawningWaves = false;
+
+            // Increase wave index
+            m_currentWaveIndex += 1;
         }
     }
 }

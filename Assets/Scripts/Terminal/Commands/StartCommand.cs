@@ -33,7 +33,6 @@ public class StartCommand : Command
             yield break;
         }
         AISpawnerV2.Instance.StartWaveSpawning();
-        Terminal.PrintToTerminal($"Simulation is now starting");
         yield return null;
     }
 
