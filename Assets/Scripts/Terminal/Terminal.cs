@@ -129,6 +129,16 @@ public class Terminal : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(obj.GetComponent<RectTransform>());
     }
 
+    public static void PrintToTerminal(string message, Color textColor)
+    {
+        //instantate the terminal output line
+        GameObject obj = Instantiate(sTerminalOutputLinePrefab, new Vector3(0, 0, 0), Quaternion.identity, sTerminalOutputLineParent.transform);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(sTerminalOutputLineParent);
+        obj.GetComponentInChildren<TextMeshProUGUI>().text = message + "\n";
+        obj.GetComponentInChildren<TextMeshProUGUI>().color =textColor;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(obj.GetComponent<RectTransform>());
+    }
+
 }
 
 
